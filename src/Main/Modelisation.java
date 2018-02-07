@@ -3,6 +3,7 @@ package Main;
 import java.util.ArrayList;
 
 import org.chocosolver.solver.Model;
+import org.chocosolver.solver.Solution;
 import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.solver.variables.Task;
 
@@ -14,7 +15,7 @@ public class Modelisation {
 		ArrayList<Grue> grues = Donnees1.dGrue();
 		int NbBat = navires.size();
 		int NbGrue = grues.size();
-		int Quai = 30;
+		int Quai = 15;
 		int NbMin = 1440;
 		
 		Model model = new Model("Problème combinatoire");
@@ -38,11 +39,8 @@ public class Modelisation {
 			}
 		
 		// Contrainte : les bateaux ne peuvent pas dépasser le quai
-		model.cumulative(tasks, height, capacity).post();;
+		model.cumulative(tasks, height, capacity).post();
 		
-		//System.out.println(Donnees1.dGrue());
-		//System.out.println(Donnees1.dNav());
-		//System.out.println(tasks[0]);
 		
 	}
 }
