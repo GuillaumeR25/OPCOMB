@@ -1,5 +1,7 @@
 package Main;
 
+import java.util.ArrayList;
+
 public class Grue {
 	
 	/* Identifiant */
@@ -51,6 +53,15 @@ public class Grue {
 		pond=pond/17;
 		System.out.println(pond);
 		this.setDechargement(getDechargement()*pond);
+	}
+	
+	public double dechargementTot(ArrayList<Grue> grues){
+		double rep=0;
+		for (int i=0; i<grues.size();i++){
+			grues.get(i).ponderationD();
+			rep=rep+grues.get(i).getDechargement();
+		}
+		return rep;
 	}
 	
 	public String toString(){
