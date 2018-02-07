@@ -47,7 +47,9 @@ public class Grue {
 	}
 	
 	public void ponderationD(){
-		double pond = 16/17;
+		double pond = 16;
+		pond=pond/17;
+		System.out.println(pond);
 		this.setDechargement(getDechargement()*pond);
 	}
 	
@@ -55,6 +57,11 @@ public class Grue {
 		return "Identifiant : "+this.getId()+" - Dechargement : "+this.getDechargement();
 	}
 	
-	
-
+	public static void main(String[] args) {
+		
+		Grue g1 = new Grue(1,60);
+		System.out.println(g1);
+		g1.ponderationD();
+		System.out.println(g1);
+	}
 }
