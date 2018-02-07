@@ -11,6 +11,8 @@ public class Grue {
 	private double dechargement;
 	
 	
+	
+	
 
 	public Grue() {
 		super();
