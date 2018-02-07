@@ -3,6 +3,7 @@ package Main;
 import java.util.ArrayList;
 
 import org.chocosolver.solver.Model;
+import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.solver.variables.Task;
 
@@ -18,6 +19,7 @@ public class Modelisation {
 		int NbMin = 1440;
 		
 		Model model = new Model("Problème combinatoire");
+		Solver solver = model.getSolver();
 		
 		for (int i =0; i<NbBat;i++){
 			// Une tâche de durée pour chaque bateau
@@ -39,10 +41,23 @@ public class Modelisation {
 			PositionsGrues[i] = model.intVarArray("Grue " + i,NbMin,0,NbGrue);
 		}
 		
+		
+		
 		for (int i =0; i<NbGrue-1;i++){
 			for(int j =0; j< NbMin;j++){
 				model.arithm(PositionsGrues[i][j],"<=",PositionsGrues[i+1][j]).post();
 			}
+		}
+		
+		solver.showSolutions(); 
+		solver.findSolution();
+		solver.printStatistics();
+		
+		for (int i =0; i<NbGrue-1;i++){
+			for(int j =0; j< NbMin;j++){
+				System.out.print( PositionsGrues[i][j] + " ");
+			}
+			System.out.println();
 		}
 		
 		
