@@ -10,8 +10,8 @@ import org.chocosolver.solver.variables.Task;
 public class Modelisation {
 	
 	public static void main(String[] args) {
-		ArrayList<Navire> navires = new ArrayList<>();
-		ArrayList<Grue> grues = new ArrayList();
+		ArrayList<Navire> navires = Donnees1.dNav();
+		ArrayList<Grue> grues = Donnees1.dGrue();
 		int NbBat = navires.size();
 		int NbGrue = grues.size();
 		int Quai = 30;
@@ -38,10 +38,11 @@ public class Modelisation {
 			}
 		
 		// Contrainte : les bateaux ne peuvent pas dépasser le quai
-		model.cumulative(tasks, height, capacity);
+		model.cumulative(tasks, height, capacity).post();;
 		
-		for (int i =0; i<NbGrue;i++){
-			
-		}
-		}
+		//System.out.println(Donnees1.dGrue());
+		//System.out.println(Donnees1.dNav());
+		//System.out.println(tasks[0]);
+		
+	}
 }
