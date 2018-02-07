@@ -27,8 +27,8 @@ public class Modelisation {
 			Task tacheT = model.taskVar(debT, durT, finT);
 			
 			// Une tâche de position pour chaque bateau
-			IntVar debP = model.intVar("SBateau_"+i,0,Quai);
 			int durP = navires.get(i).getTaille()+2;
+			IntVar debP = model.intVar("SBateau_"+i,0,Quai-durP);
 			Task tacheP = model.taskVar(debP, durP);
 			}
 		
