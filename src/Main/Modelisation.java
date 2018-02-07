@@ -39,7 +39,7 @@ public class Modelisation {
 			PositionsGrues[i] = model.intVarArray("Grue " + i,NbMin,0,NbGrue);
 		}
 		
-		for (int i =0; i<NbGrue;i++){
+		for (int i =0; i<NbGrue-1;i++){
 			for(int j =0; j< NbMin;j++){
 				model.arithm(PositionsGrues[i][j],"<=",PositionsGrues[i+1][j]).post();
 			}
