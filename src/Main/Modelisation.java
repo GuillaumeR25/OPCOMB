@@ -10,6 +10,41 @@ import org.chocosolver.solver.variables.Task;
 
 public class Modelisation {
 	
+	public static ArrayList<ArrayList<Grue>> GruesBateaux(ArrayList<ArrayList<Integer>> navirest, ArrayList<ArrayList<Integer>> gruest, int temps, int NbBat, ArrayList<Grue> grues){
+        ArrayList<ArrayList<Grue>> a = new ArrayList<>();
+        for (int i = 0; i<NbBat; i++){
+            ArrayList<Grue> b = new ArrayList<Grue>();
+            a.add(b);
+        }
+        
+        for (int i = 0; i<navirest.size(); i++){
+            ArrayList<Grue> bateau = new ArrayList<Grue>();
+            
+            for (int j = 0; j<gruest.size(); j++){
+                
+                if (navirest.get(temps).get(i) == gruest.get(temps).get(j)){
+                    bateau.add(grues.get(j));
+                }
+                
+            }
+            a.add(bateau);
+        }
+        
+        return a;
+    }
+    
+    public static ArrayList<Grue> gruesUtilisées(ArrayList<ArrayList<Grue>> b){
+        ArrayList<Grue> a = new ArrayList<Grue>();
+        for (int i = 0; i<b.size(); i++){
+            for (int j=0; j<b.get(i).size(); i++){
+                if (!a.contains(b.get(i).get(j))){
+                    a.add(b.get(i).get(j));
+                }
+            }
+        }
+        return a;
+    }
+	
 	public static void main(String[] args) {
 		ArrayList<Navire> navires = Donnees1.dNav();
 		ArrayList<Grue> grues = Donnees1.dGrue();
