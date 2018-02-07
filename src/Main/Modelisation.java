@@ -38,7 +38,7 @@ public class Modelisation {
 			
 			}
 		
-		// Contrainte : les bateaux ne peuvent pas dépasser le quai
+		//Contrainte : les bateaux ne peuvent pas dépasser le quai
 		model.cumulative(tasks, height, capacity).post();
 		
 		
