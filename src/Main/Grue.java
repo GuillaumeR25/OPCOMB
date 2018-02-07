@@ -5,8 +5,8 @@ public class Grue {
 	/* Identifiant */
 	private int id;
 	 
-	/* Vitesse de déchargement */
-	private int dechargement;
+	/* Vitesse de dï¿½chargement */
+	private double dechargement;
 	
 	
 
@@ -16,7 +16,7 @@ public class Grue {
 
 
 
-	public Grue(int id, int dechargement) {
+	public Grue(int id, double dechargement) {
 		super();
 		this.id = id;
 		this.dechargement = dechargement;
@@ -36,14 +36,19 @@ public class Grue {
 
 
 
-	public int getDechargement() {
+	public double getDechargement() {
 		return dechargement;
 	}
 
 
 
-	public void setDechargement(int dechargement) {
+	public void setDechargement(double dechargement) {
 		this.dechargement = dechargement;
+	}
+	
+	public void ponderationD(){
+		double pond = 16/17;
+		this.setDechargement(getDechargement()*pond);
 	}
 	
 	public String toString(){
