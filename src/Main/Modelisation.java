@@ -19,18 +19,26 @@ public class Modelisation {
 		
 		Model model = new Model("Problème combinatoire");
 		
+		IntVar capacity = model.intVar(Quai);
+		
+		Task[] tasks = new Task[NbBat];
+		
+		IntVar[] height = new IntVar[NbBat];
+		
 		for (int i =0; i<NbBat;i++){
 			// Une tâche de durée pour chaque bateau
 			IntVar debT = model.intVar("SBateau_"+i,0,NbMin);
 			IntVar durT = model.intVar("PBateau_"+i,0,NbMin);
 			IntVar finT = model.intVar("FBateau_"+i,0,NbMin);
 			Task tacheT = model.taskVar(debT, durT, finT);
+			IntVar taille = model.intVar(navires.get(i).getTaille()+2);
+			tasks[i]=tacheT;
+			height[i]=taille;
 			
-			// Une tâche de position pour chaque bateau
-			int durP = navires.get(i).getTaille()+2;
-			IntVar debP = model.intVar("SBateau_"+i,0,Quai-durP);
-			Task tacheP = model.taskVar(debP, durP);
 			}
+		
+		// Contrainte : les bateaux ne peuvent pas dépasser le quai
+		model.cumulative(tasks, height, capacity);
 		
 		for (int i =0; i<NbGrue;i++){
 			
