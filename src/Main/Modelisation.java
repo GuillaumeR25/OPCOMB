@@ -65,6 +65,8 @@ public class Modelisation {
 		
 		IntVar[] height = new IntVar[NbBat];
 		
+		 ArrayList<IntVar> PositionBateaux = new ArrayList<IntVar>();
+		
 		for (int i =0; i<NbBat;i++){
 			// Une tâche de durée pour chaque bateau
 			IntVar debT = model.intVar("SBateau_"+i,0,NbMin);
@@ -75,6 +77,10 @@ public class Modelisation {
 			IntVar taille = model.intVar(navires.get(i).getTaille()+2);
 			tasks[i]=tacheT;
 			height[i]=taille;
+			
+			//Position des navires
+			IntVar pos = model.intVar("pos_"+i, 0, Quai);
+	        PositionBateaux.add(pos);
 			
 			}
 		
