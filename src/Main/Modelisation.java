@@ -10,6 +10,8 @@ import org.chocosolver.solver.variables.Task;
 
 public class Modelisation {
 	
+	
+	//Fonction permettant de savoir l'identifiant des grues sur chaque bateau a chaque temps t
 	public static ArrayList<ArrayList<Grue>> GruesBateaux(ArrayList<ArrayList<Integer>> navirest, ArrayList<ArrayList<Integer>> gruest, int temps, int NbBat, ArrayList<Grue> grues){
         ArrayList<ArrayList<Grue>> a = new ArrayList<>();
         for (int i = 0; i<NbBat; i++){
@@ -33,6 +35,7 @@ public class Modelisation {
         return a;
     }
     
+	//Fonction permettant de savoir l'identifiant des grues sur chaque bateau
     public static ArrayList<Grue> gruesUtilisées(ArrayList<ArrayList<Grue>> b){
         ArrayList<Grue> a = new ArrayList<Grue>();
         for (int i = 0; i<b.size(); i++){
@@ -45,6 +48,7 @@ public class Modelisation {
         return a;
     }
 	
+    //Solver
 	public static void main(String[] args) {
 		ArrayList<Navire> navires = Donnees1.dNav();
 		ArrayList<Grue> grues = Donnees1.dGrue();
@@ -82,8 +86,7 @@ public class Modelisation {
                 PositionsGrues[i] = model.intVarArray("Grue " + i,NbMin,0,NbGrue);
         }
         
-        
-        
+        //Contrainte sur l'ordre des grues
         for (int i =0; i<NbGrue-1;i++){
                 for(int j =0; j< NbMin;j++){
                         model.arithm(PositionsGrues[i][j],"<=",PositionsGrues[i+1][j]).post();
