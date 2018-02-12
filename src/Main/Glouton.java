@@ -38,6 +38,32 @@ public class Glouton {
 		return rep;
 	}
 	
+	public boolean insertion (ArrayList<Integer> quai, ArrayList<Navire> attente,  Navire n){
+		int taille = n.encombrement();
+		int newpos = placement(quai, taille);
+		boolean res;
+		if(newpos >= quai.size()){
+			attente.add(n);
+			res = false;
+		}else{
+			for(int i=0; i<taille; i++){
+				quai.set(i+newpos, n.getId());
+			}
+			res = true;
+		}
+		return res;
+	}
+	
+	public void next_iter_Arrive 
+	(ArrayList<Navire> navires, ArrayList<Grue> grues, ArrayList<Tache> taches, ArrayList<Navire> attente, ArrayList<Integer> quai, Navire n){
+		boolean temp = insertion(quai, attente, n);
+		if(!temp){
+			attente.add(n);
+		}
+		Tache
+		
+	}
+	
 	
 	public static void main(String[] args) {
 		ArrayList<Navire> navires = Donnees1.dNav();
