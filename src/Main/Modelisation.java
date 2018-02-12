@@ -54,7 +54,7 @@ public class Modelisation {
 		ArrayList<Grue> grues = Donnees1.dGrue();
 		int NbBat = navires.size();
 		int NbGrue = grues.size();
-		int Quai = 15;
+		int Quai = 20;
 		int NbMin = 1440;
 		
 		Model model = new Model("Problème combinatoire");
@@ -68,7 +68,8 @@ public class Modelisation {
 		for (int i =0; i<NbBat;i++){
 			// Une tâche de durée pour chaque bateau
 			IntVar debT = model.intVar("SBateau_"+i,0,NbMin);
-			IntVar durT = model.intVar("PBateau_"+i,0,NbMin);
+			//IntVar durT = model.intVar("PBateau_"+i,0,NbMin);
+			IntVar durT = model.intVar(30);
 			IntVar finT = model.intVar("FBateau_"+i,0,NbMin);
 			Task tacheT = model.taskVar(debT, durT, finT);
 			IntVar taille = model.intVar(navires.get(i).getTaille()+2);
@@ -80,7 +81,7 @@ public class Modelisation {
 		//Contrainte : les bateaux ne peuvent pas dépasser le quai
 		model.cumulative(tasks, height, capacity).post();
 		
-		//  Tableaux retraçant la position des grues au cours du temps
+	/*	//  Tableaux retraçant la position des grues au cours du temps
         IntVar[][] PositionsGrues = new IntVar[NbGrue][NbMin];
         for (int i =0; i<NbGrue-1;i++){
                 PositionsGrues[i] = model.intVarArray("Grue " + i,NbMin,0,NbGrue);
@@ -91,6 +92,12 @@ public class Modelisation {
                 for(int j =0; j< NbMin;j++){
                         model.arithm(PositionsGrues[i][j],"<=",PositionsGrues[i+1][j]).post();
                 }
-        }	
+        }*/	
+		Solution solution = model.getSolver().findSolution();
+		if(solution != null){
+		    System.out.println(solution.toString());
+		}else{
+			System.out.println("Hello");
+		}
 	}
 }
