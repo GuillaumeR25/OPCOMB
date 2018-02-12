@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Glouton {
 	
-	//fonction qui place un navire sur le quai
+	// Fonction qui place un navire sur le quai
 	public static boolean arrivee(ArrayList<Integer> quai, Navire nav, int pos){
 		boolean rep = false;
 		for(int i=0; i<nav.getTaille()+2;i++){
@@ -18,9 +18,21 @@ public class Glouton {
 		return rep;
 	}
 	
+	// Fonction mettant à jour le quai lors du départ d'un navire
 	public static void depart(ArrayList<Integer> quai, Navire nav, int pos){
 		for(int i=0;i<nav.getTaille()+2;i++){
 			quai.set(pos+i, 0);
+		}
+	}
+	
+	// Fonction mettant à jour la liste des navires en attente dans le port pour un temps t
+	public void aJour(ArrayList<Navire> restant,ArrayList<Navire> attente, double temps){
+		for(int i=0; i<restant.size(); i++){
+			Navire n = restant.get(i);
+			if(n.getArrive()<temps){
+				attente.add(n);
+				restant.remove(i);
+			}
 		}
 	}
 	
@@ -55,27 +67,45 @@ public class Glouton {
 		
 	}
 	
-	public void next_iter_Depart(ArrayList<Navire> navires, ArrayList<Grue> grues, ArrayList<Tache> taches, ArrayList<Navire> attente, ArrayList<Integer> quai,double fin){
+	public void next_iter_Depart(ArrayList<Navire> restant,ArrayList<Tache> taches, ArrayList<Navire> attente, ArrayList<Integer> quai,double fin){
 		Tache Tcurrent = taches.get(taches.size()-1);
 		Navire n = Tcurrent.getNav();
-		for(int i=n.getId()+1;i<navires.size();i++){
-			if(navires.get(i).getArrive()<fin&& !attente.contains(navires.get(i))){
-				attente.add(navires.get(i));
+		aJour(restant, attente,fin);
+		depart(quai,n,Tcurrent.getPosition());
+		for (int i=0; i<attente.size();i++){
+			Navire nav = attente.get(i);
+			int place = placement(quai,nav.getTaille()+2);
+			if(place<quai.size()){
+				arrivee(quai,nav,place);
+				attente.remove(i);
 			}
 		}
 	}
 	
 	
 	public static void main(String[] args) {
+		// Liste des navires à placer
 		ArrayList<Navire> navires = Donnees1.dNav();
+		
+		// Liste des grues disponibles
 		ArrayList<Grue> grues = Donnees1.dGrue();
+		
+		// Liste des navires en attente dans le port
 		ArrayList<Navire> attente = new ArrayList<>();
+		
+		// Liste des navires qui n'ont pas été déchargés
+		ArrayList<Navire> restant = new ArrayList<>();
+		
+		
 		int NbBat = navires.size();
 		int NbGrue = 5;
 		int capGrue = 12;
 		int Quai = 20;
 		
+		// Réponse
 		ArrayList<Tache> rep = new ArrayList<>();
+		
+		// Liste représentant le quai
 		ArrayList<Integer> quai = new ArrayList<>();
 		
 		double deb=0;
@@ -102,6 +132,8 @@ public class Glouton {
 		System.out.println(quaiF);
 		depart(quaiF,navires.get(0),0);
 		System.out.println(quaiF);
+		
+		//Test fonction next_iter_Depart
 		
 	}
 }
