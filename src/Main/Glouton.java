@@ -26,15 +26,11 @@ public class Glouton {
 		int fpos=0;
 		while(pos<quai.size()&&t<taille){
 			if(quai.get(pos)!=0){
-				System.out.println("Il y a pas de place");
 				pos++;
-				System.out.println(pos);
 				t=0;
 			}else{
-				System.out.println("Il y a de la place");
 				pos++;
 				fpos=pos;
-				System.out.println(pos);
 				t++;	
 			}
 		}
