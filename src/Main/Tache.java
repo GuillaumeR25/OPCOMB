@@ -3,13 +3,15 @@ package Main;
 public class Tache {
 	
 	private Navire nav;
-	private int fin;
+	private double debut;
+	private double fin;
 	private int position;
 	private int nbG;
 	
-	public Tache(Navire nav, int fin, int position, int nbG) {
+	public Tache(Navire nav, double debut, double fin, int position, int nbG) {
 		super();
 		this.nav = nav;
+		this.debut=debut;
 		this.fin = fin;
 		this.position = position;
 		this.nbG = nbG;
@@ -23,7 +25,7 @@ public class Tache {
 		this.nav = nav;
 	}
 
-	public int getFin() {
+	public double getFin() {
 		return fin;
 	}
 
@@ -48,7 +50,7 @@ public class Tache {
 	}
 	
 	public String toString(){
-		return this.nav+" "+this.position+" "+this.fin;
+		return "Navire "+this.nav+" Position " +this.position+" Fin "+this.fin;
 	}
 
 }

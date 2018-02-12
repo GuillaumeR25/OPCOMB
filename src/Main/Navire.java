@@ -11,7 +11,7 @@ public class Navire {
 	/* Taille du navire */
 	private int taille;
 	
-	/* Heure d'arrivée du navire */
+	/* Heure d'arrivï¿½e du navire */
 	private int arrive;
 	
 	
@@ -78,11 +78,13 @@ public class Navire {
 	public void setArrive(int arrive) {
 		this.arrive = arrive;
 	}
+	
+	
 
 
 
-	/* Retourne le nombre d'unité de quai indisponible lorsque le navire est à quai.
-	 * Correspond à la taille du navire plus une unité à l'arrière et une unité à l'avant.
+	/* Retourne le nombre d'unitï¿½ de quai indisponible lorsque le navire est ï¿½ quai.
+	 * Correspond ï¿½ la taille du navire plus une unitï¿½ ï¿½ l'arriï¿½re et une unitï¿½ ï¿½ l'avant.
 	 */
 	public int encombrement(){
 		 return this.getTaille()+2;
