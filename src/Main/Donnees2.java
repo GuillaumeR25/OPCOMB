@@ -1,5 +1,10 @@
 package Main;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 public class Donnees2 {
 	
 	/* Plage horaire sur laquelle on cherche à établir une planification */
@@ -37,6 +42,26 @@ public class Donnees2 {
 	Grue g8 = new Grue(8, 21);
 	Grue g9 = new Grue(9, 16);
 	Grue g10 = new Grue(10, 24);
+	
+	ArrayList<Navire> navires = new ArrayList<Navire>();
+	
+	navires.add(n1);
+	navires.add(n2);
+	navires.add(n3);
+	navires.add(n4);
+	navires.add(n5);
+	navires.add(n6);
+	navires.add(n7);
+	navires.add(n8);
+	navires.add(n9);
+	navires.add(n10);
+	navires.add(n11);
+	navires.add(n12);
+	
+	
+	
+	
+	
 	}
 
 }

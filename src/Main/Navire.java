@@ -88,6 +88,20 @@ public class Navire {
 		 return this.getTaille()+2;
 	}
 	
+	public int compareTo(Navire n){
+		int  res = 0;
+		if(this.getArrive() < n.getArrive()){
+			res = -1;
+		}
+		if(this.getArrive() == n.getArrive()){
+			res = 0;
+		}
+		if(this.getArrive() > n.getArrive()){
+			res = 1;
+		}
+		return res;
+	}
+	
 	public String toString(){
 		return "Identifiant : "+this.getId()+" - Chargement"+this.getChargement()+
 				" - Taille : "+this.getTaille()+" - Arrive : "+this.getArrive();
