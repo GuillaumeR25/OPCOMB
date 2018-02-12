@@ -72,18 +72,24 @@ public class Glouton {
 		
 	}
 	
-	public void next_iter_Depart(ArrayList<Navire> restant,ArrayList<Tache> taches, ArrayList<Navire> attente, ArrayList<Integer> quai,double fin){
+	// Fonction mettant à jour lors d'un deprt de bateau la liste des bateau restant, la liste des bateau en attente, le quai
+	public static void next_iter_Depart(ArrayList<Navire> restant,ArrayList<Tache> taches, ArrayList<Navire> attente, ArrayList<Integer> quai,double fin){
 		Tache Tcurrent = taches.get(taches.size()-1);
 		Navire n = Tcurrent.getNav();
 		aJour(restant, attente,fin);
 		depart(quai,n,Tcurrent.getPosition());
+		ArrayList<Navire> withdraw = new ArrayList<>();
 		for (int i=0; i<attente.size();i++){
+			System.out.println(attente.size());
 			Navire nav = attente.get(i);
 			int place = placement(quai,nav.getTaille()+2);
 			if(place<quai.size()){
 				arrivee(quai,nav,place);
-				attente.remove(i);
+				withdraw.add(nav);
 			}
+		}
+		for (int i=0;i<withdraw.size();i++){
+			attente.remove(withdraw.get(i));
 		}
 	}
 	
@@ -144,10 +150,12 @@ public class Glouton {
 		
 		//Test fonction next_iter_Depart
 		restant.remove(0);
-		System.out.println("Fonction Ajour");
-		aJour(restant,attente,t.getFin());
+		System.out.println("Fonction next_iter_Depart");
+		next_iter_Depart(restant, rep, attente, quaiF, 4);
+		System.out.println("Résultats");
 		System.out.println("Bateau restant "+restant);
 		System.out.println("Bateau en attentes "+attente);
+		System.out.println("Quai : "+quaiF);
 		
 	}
 }
