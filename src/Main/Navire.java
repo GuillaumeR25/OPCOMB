@@ -12,7 +12,7 @@ public class Navire {
 	private int taille;
 	
 	/* Heure d'arriv�e du navire */
-	private int arrive;
+	private double arrive;
 	
 	
 	
@@ -24,7 +24,7 @@ public class Navire {
 
 
 
-	public Navire(int id, int chargement, int taille, int arrive) {
+	public Navire(int id, int chargement, int taille, double arrive) {
 		super();
 		this.id = id;
 		this.chargement = chargement;
@@ -69,7 +69,7 @@ public class Navire {
 	}
 	
 
-	public int getArrive() {
+	public double getArrive() {
 		return arrive;
 	}
 

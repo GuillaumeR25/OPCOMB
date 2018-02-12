@@ -40,6 +40,24 @@ public class Glouton {
 		return rep;
 	}
 	
+	public void next_iter_Arrive 
+	(ArrayList<Navire> navires, ArrayList<Grue> grues, ArrayList<Tache> taches, ArrayList<Navire> attente, ArrayList<Integer> quai, Navire n){
+		/*boolean temp = insertion(quai, attente, n);
+		if(!temp){
+			attente.add(n);
+		}*/
+		
+	}
+	
+	public void next_iter_Depart(ArrayList<Navire> navires, ArrayList<Grue> grues, ArrayList<Tache> taches, ArrayList<Navire> attente, ArrayList<Integer> quai, Navire n,double fin){
+		Tache Tbat = taches.get(taches.size()-1);
+		for(int i=n.getId()+1;i<navires.size();i++){
+			if(navires.get(i).getArrive()<fin&& !attente.contains(navires.get(i))){
+				attente.add(navires.get(i));
+			}
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		ArrayList<Navire> navires = Donnees1.dNav();
