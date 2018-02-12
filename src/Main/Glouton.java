@@ -5,35 +5,41 @@ import java.util.ArrayList;
 public class Glouton {
 	
 	//fonction qui place un navire sur le quai
-	public boolean arrivee(ArrayList<Integer> quai, Navire nav, int pos){
+	public static boolean arrivee(ArrayList<Integer> quai, Navire nav, int pos){
 		boolean rep = false;
-		for(int i=0; i<nav.getTaille();i++){
+		for(int i=0; i<nav.getTaille()+2;i++){
+			if(pos+nav.getTaille()+2<quai.size()){
 			if(quai.get(pos+i)==0){
 				quai.set(pos+i,nav.getId());
 				rep=true;
+			}
 			}
 		}
 		return rep;
 	}
 	
-	//fonction qui trouve un emplacement pour un navire
-	public int placement(ArrayList<Integer> quai, int taille){
+	//Fonction qui trouve un emplacement pour un navire
+	public static int placement(ArrayList<Integer> quai, int taille){
 		int rep = quai.size()+1;
 		int pos=0;
 		int t=0;
 		int fpos=0;
 		while(pos<quai.size()&&t<taille){
 			if(quai.get(pos)!=0){
+				System.out.println("Il y a pas de place");
 				pos++;
+				System.out.println(pos);
 				t=0;
 			}else{
-				fpos=pos;
+				System.out.println("Il y a de la place");
 				pos++;
+				fpos=pos;
+				System.out.println(pos);
 				t++;	
 			}
 		}
 		if(t==taille){
-			rep=fpos;
+			rep=fpos-taille;
 		}
 		return rep;
 	}
@@ -47,7 +53,6 @@ public class Glouton {
 		int NbGrue = 5;
 		int capGrue = 12;
 		int Quai = 20;
-		int NbMin = 1440;
 		
 		ArrayList<Tache> rep = new ArrayList<>();
 		ArrayList<Integer> quai = new ArrayList<>();
@@ -62,7 +67,19 @@ public class Glouton {
 			deb=fin;
 			rep.add(t);
 		}
-		System.out.println(rep);
+		//System.out.println(rep);
+		
+		//Test fonction placement
+		
+		ArrayList<Integer> quaiF = new ArrayList<>();
+		for(int i=0;i<Quai;i++){
+			quaiF.add(0);
+		}
+		System.out.println(quaiF);
+		arrivee(quaiF,navires.get(0),0);
+		arrivee(quaiF,navires.get(3),8);
+		arrivee(quaiF,navires.get(5),14);
+		System.out.println(quaiF);
 		
 	}
 }
