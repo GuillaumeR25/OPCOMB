@@ -18,6 +18,12 @@ public class Glouton {
 		return rep;
 	}
 	
+	public static void depart(ArrayList<Integer> quai, Navire nav, int pos){
+		for(int i=0;i<nav.getTaille()+2;i++){
+			quai.set(pos+i, 0);
+		}
+	}
+	
 	//Fonction qui trouve un emplacement pour un navire
 	public static int placement(ArrayList<Integer> quai, int taille){
 		int rep = quai.size()+1;
@@ -49,8 +55,9 @@ public class Glouton {
 		
 	}
 	
-	public void next_iter_Depart(ArrayList<Navire> navires, ArrayList<Grue> grues, ArrayList<Tache> taches, ArrayList<Navire> attente, ArrayList<Integer> quai, Navire n,double fin){
-		Tache Tbat = taches.get(taches.size()-1);
+	public void next_iter_Depart(ArrayList<Navire> navires, ArrayList<Grue> grues, ArrayList<Tache> taches, ArrayList<Navire> attente, ArrayList<Integer> quai,double fin){
+		Tache Tcurrent = taches.get(taches.size()-1);
+		Navire n = Tcurrent.getNav();
 		for(int i=n.getId()+1;i<navires.size();i++){
 			if(navires.get(i).getArrive()<fin&& !attente.contains(navires.get(i))){
 				attente.add(navires.get(i));
@@ -92,7 +99,8 @@ public class Glouton {
 		System.out.println(quaiF);
 		arrivee(quaiF,navires.get(0),0);
 		arrivee(quaiF,navires.get(3),8);
-		arrivee(quaiF,navires.get(5),14);
+		System.out.println(quaiF);
+		depart(quaiF,navires.get(0),0);
 		System.out.println(quaiF);
 		
 	}
