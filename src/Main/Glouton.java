@@ -110,8 +110,8 @@ public class Glouton {
 		
 		
 		int NbBat = navires.size();
-		int NbGrue = 5;
-		int capGrue = 12;
+		int NbGrue = grues.size();
+		int capGrue = 9;
 		int Quai = 20;
 		
 		// Réponse
