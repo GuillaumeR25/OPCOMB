@@ -26,13 +26,18 @@ public class Glouton {
 	}
 	
 	// Fonction mettant à jour la liste des navires en attente dans le port pour un temps t
-	public void aJour(ArrayList<Navire> restant,ArrayList<Navire> attente, double temps){
-		for(int i=0; i<restant.size(); i++){
+	public static void aJour(ArrayList<Navire> restant,ArrayList<Navire> attente, double temps){
+		int l =restant.size();
+		ArrayList<Navire> withdraw =new ArrayList<>();
+		for(int i=0; i<l; i++){
 			Navire n = restant.get(i);
-			if(n.getArrive()<temps){
+			if(n.getArrive()<=temps){
 				attente.add(n);
-				restant.remove(i);
+				withdraw.add(n);
 			}
+		}
+		for(int i=0; i<withdraw.size();i++){
+			restant.remove(withdraw.get(i));
 		}
 	}
 	
@@ -95,6 +100,7 @@ public class Glouton {
 		
 		// Liste des navires qui n'ont pas été déchargés
 		ArrayList<Navire> restant = new ArrayList<>();
+		restant.addAll(navires);
 		
 		
 		int NbBat = navires.size();
@@ -108,7 +114,7 @@ public class Glouton {
 		// Liste représentant le quai
 		ArrayList<Integer> quai = new ArrayList<>();
 		
-		double deb=0;
+		/*double deb=0;
 		double dTot= NbGrue*capGrue;
 		for (int i=0; i<NbBat;i++){
 			double fin= deb+navires.get(i).getChargement()/dTot;
@@ -117,7 +123,7 @@ public class Glouton {
 			Tache t = new Tache(navires.get(i),deb,fin,0,NbGrue);
 			deb=fin;
 			rep.add(t);
-		}
+		}*/
 		//System.out.println(rep);
 		
 		//Test fonction placement
@@ -126,14 +132,22 @@ public class Glouton {
 		for(int i=0;i<Quai;i++){
 			quaiF.add(0);
 		}
-		System.out.println(quaiF);
-		arrivee(quaiF,navires.get(0),0);
-		arrivee(quaiF,navires.get(3),8);
-		System.out.println(quaiF);
-		depart(quaiF,navires.get(0),0);
-		System.out.println(quaiF);
+		//System.out.println(quaiF);
+		//arrivee(quaiF,navires.get(0),0);
+		Tache t = new Tache(navires.get(0),0,4,0,NbGrue);
+		rep.add(t);
+		//arrivee(quaiF,navires.get(3),8);
+		//System.out.println(quaiF);
+		//depart(quaiF,navires.get(0),0);
+		//System.out.println(quaiF);
+		System.out.println(rep);
 		
 		//Test fonction next_iter_Depart
+		restant.remove(0);
+		System.out.println("Fonction Ajour");
+		aJour(restant,attente,t.getFin());
+		System.out.println("Bateau restant "+restant);
+		System.out.println("Bateau en attentes "+attente);
 		
 	}
 }
