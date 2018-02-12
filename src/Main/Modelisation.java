@@ -65,7 +65,7 @@ public class Modelisation {
 		
 		IntVar[] height = new IntVar[NbBat];
 		
-		 ArrayList<IntVar> PositionBateaux = new ArrayList<IntVar>();
+		ArrayList<IntVar> PositionBateaux = new ArrayList<IntVar>();
 		
 		for (int i =0; i<NbBat;i++){
 			// Une tâche de durée pour chaque bateau
@@ -84,8 +84,14 @@ public class Modelisation {
 			
 			}
 		
+		
+		
 		//Contrainte : les bateaux ne peuvent pas dépasser le quai
 		model.cumulative(tasks, height, capacity).post();
+		
+		//Contrainte : les bateaux ne peuvent pas se superposer
+		
+		
 		
 	/*	//  Tableaux retraçant la position des grues au cours du temps
         IntVar[][] PositionsGrues = new IntVar[NbGrue][NbMin];
