@@ -230,6 +230,8 @@ public class Glouton2 {
 		}
 		
 		update_tache(taches, solution, restant, attente, quai, 600, capaGrue, NbG);
+		update_tache(taches, solution, restant, attente, quai, 600, capaGrue, NbG);
+		update_tache(taches, solution, restant, attente, quai, 600, capaGrue, NbG);
 		
 		
 		
