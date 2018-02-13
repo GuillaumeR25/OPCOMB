@@ -220,8 +220,6 @@ public class Glouton2 {
 		
 		//Execution du code
 		System.out.println("Début éxécution");
-		//int i=0;
-		//while(!sol){
 		for(int i=0; i<3; i++){
 			System.out.println("i"+i);
 			//double temp = restant.get(0).getArrive();
@@ -239,10 +237,6 @@ public class Glouton2 {
 			if(taches.size() > 1){
 				System.out.println(taches.get(1).toString());
 			}
-			/*if(decharge.size()==NbV){
-				sol=true;
-			}*/
-			//i++;
 		}
 		
 		
