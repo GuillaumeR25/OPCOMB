@@ -148,13 +148,23 @@ public class Glouton2 {
 			int encombrement = n.encombrement();
 			int newpos = placement(quai, encombrement);
 			if(newpos < quaiL){
-				next_iter_Arrive(taches, rep, restant, attente, quai, temps, capaGrue, NbG, n);
+				attente_enCours(taches, rep, restant, attente, quai, temps, capaGrue, NbG, n, newpos);
 				PEC.add(n);
 			}
 		}
 		for(Navire n : PEC){
 			attente.remove((Object)n);
 		}
+	}
+	
+	public static void attente_enCours (ArrayList<Tache> taches, ArrayList<Tache> rep, ArrayList<Navire> restant, ArrayList<Navire> attente, 
+			ArrayList<Integer> quai, double temps, int capaGrue, int NbG, Navire n, int pos){
+		arrive(quai, n, pos);
+		Tache t = new Tache(n, temps, temps, pos, 0, n.getChargement(), temps);
+		taches.add(t);
+		update_tache(taches, rep, restant, attente, quai, temps, capaGrue, NbG);
+		
+		
 	}
 	
 	public static void main(String[] args) {
@@ -218,6 +228,8 @@ public class Glouton2 {
 				System.out.println(taches.get(1).toString());
 			}
 		}
+		
+		update_tache(taches, solution, restant, attente, quai, 600, capaGrue, NbG);
 		
 		
 		
