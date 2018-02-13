@@ -1,6 +1,18 @@
 package Main;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import jxl.Workbook;
+import jxl.format.Colour;
+import jxl.write.Label;
+import jxl.write.WritableCell;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 public class Glouton2 {
 	
@@ -18,14 +30,14 @@ public class Glouton2 {
 		return rep;
 	}
 	
-	// Fonction mettant à jour le quai lors du départ d'un navire
+	// Fonction mettant ï¿½ jour le quai lors du dï¿½part d'un navire
 	public static void depart(ArrayList<Integer> quai, Navire nav, int pos){
 		for(int i=0;i<nav.getTaille()+2;i++){
 			quai.set(pos+i, 0);
 		}
 	}
 	
-	// Fonction mettant à jour le quai lors de l'arrivée d'un navire.
+	// Fonction mettant ï¿½ jour le quai lors de l'arrivï¿½e d'un navire.
 	public static void arrive(ArrayList<Integer> quai, Navire n, int pos){
 		int encombrement = n.encombrement();
 		int id = n.getId();
@@ -34,7 +46,7 @@ public class Glouton2 {
 		}
 	}
 	
-	// Fonction mettant à jour la liste des navires en attente dans le port pour un temps t
+	// Fonction mettant ï¿½ jour la liste des navires en attente dans le port pour un temps t
 	public static void aJour(ArrayList<Navire> restant,ArrayList<Navire> attente, double temps){
 		int l =restant.size();
 		ArrayList<Navire> withdraw =new ArrayList<>();
@@ -73,8 +85,8 @@ public class Glouton2 {
 		
 	}
 	
-	// Fonction qui rend la différence en heure entre deux représentation d'heure en "format double"
-	// h1 est antérieure à h2
+	// Fonction qui rend la diffï¿½rence en heure entre deux reprï¿½sentation d'heure en "format double"
+	// h1 est antï¿½rieure ï¿½ h2
 	public static double difference (double h1, double h2){
 		if (h1 > h2){
 			return -1;
@@ -84,7 +96,7 @@ public class Glouton2 {
 		}
 	}
 	
-	// Fonction qui répartie les grues en fonction du chargement des navires
+	// Fonction qui rï¿½partie les grues en fonction du chargement des navires
 	public static void repartition(ArrayList<Tache> taches, int NbG){
 		double s = 0;
 		for(Tache t : taches){
@@ -101,7 +113,7 @@ public class Glouton2 {
 		taches.get(taches.size()-1).setNbG(NbG-g);
 	}
 	
-	// Fonction qui met à jour les taches en cours.
+	// Fonction qui met ï¿½ jour les taches en cours.
 	
 	public static void update_tache (ArrayList<Tache> taches, ArrayList<Tache> rep, ArrayList<Navire> restant, ArrayList<Navire> attente, 
 			ArrayList<Integer> quai, double temps, int capaGrue, int NbG){
@@ -170,7 +182,7 @@ public class Glouton2 {
 	public static void main(String[] args) {
 		
 		
-		//Données du problème
+		//Donnï¿½es du problï¿½me
 		
 		// Liste des navires
 		ArrayList<Navire> navires = new ArrayList<Navire>();
@@ -182,13 +194,13 @@ public class Glouton2 {
 		//Nombre de grue
 		int NbG = 5;
 		
-		// Capacité de déchargement des grues
+		// Capacitï¿½ de dï¿½chargement des grues
 		int capaGrue = 20;
 		
 		// Longueur du quai;
 		int  quaiL = 12;
 		
-		// Variables du problème
+		// Variables du problï¿½me
 		
 		// Navires restants
 		ArrayList<Navire> restant = navires;
@@ -205,7 +217,7 @@ public class Glouton2 {
 			quai.add(0);
 		}
 		
-		// Liste des taches terminées
+		// Liste des taches terminï¿½es
 		ArrayList<Tache> solution = new ArrayList<Tache>();;
 		
 		
@@ -243,8 +255,72 @@ public class Glouton2 {
 		System.out.println("Quai : "+quai.toString());
 		System.out.println("Solution : "+solution.toString());
 		
+		//Creation de la feuille de planning excel excel
 		
-		
+		WritableWorkbook workbook = null;
+		try {
+			/* On crÃ©Ã© un nouveau worbook et on l'ouvre en Ã©criture */
+			workbook = Workbook.createWorkbook(new File("/Users/clovismonmousseau/git/OPCOMB/data/Sortie.xls"));
+			/* On crÃ©Ã© une nouvelle feuille (test en position 0) et on l'ouvre en Ã©criture */
+			WritableSheet sheet = workbook.createSheet("Planning Navire", 0); 
+			/* Creation d'un champ au format texte */
+			int posLigne =0;
+			for(Tache t : solution){
+				for(int j =0; j<24;j++){
+					if(t.getDebut()/100>(double)j){
+						Label labelFormation = new Label(j, posLigne, " ");
+						sheet.addCell(labelFormation);
+						WritableCell c = sheet.getWritableCell(j,posLigne);
+					    WritableCellFormat newFormat = new WritableCellFormat(c.getCellFormat());
+					    newFormat.setBackground(Colour.GRAY_25);
+					    c.setCellFormat(newFormat);
+					}
+					if(t.getDebut()/100<=(double)j &&t.getFin()>=(double)j){
+						Label labelFormation = new Label(j, posLigne, " ");
+						sheet.addCell(labelFormation);
+						WritableCell c = sheet.getWritableCell(j,posLigne);
+					    WritableCellFormat newFormat = new WritableCellFormat(c.getCellFormat());
+					    newFormat.setBackground(Colour.YELLOW);
+					    c.setCellFormat(newFormat);
+					}
+					if(t.getFin()/100<(double)j){
+						Label labelFormation = new Label(j, posLigne, " ");
+						sheet.addCell(labelFormation);
+						WritableCell c = sheet.getWritableCell(j,posLigne);
+					    WritableCellFormat newFormat = new WritableCellFormat(c.getCellFormat());
+					    newFormat.setBackground(Colour.GREEN);
+					    c.setCellFormat(newFormat);
+					}
+				}
+				posLigne++;
+			}
+			/* On ecrit le classeur */
+			workbook.write(); 
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		} 
+		catch (RowsExceededException e) {
+			e.printStackTrace();
+		}
+		catch (WriteException e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(workbook!=null){
+				/* On ferme le worbook pour libÃ©rer la mÃ©moire */
+				/**/
+				try {
+					workbook.close();
+				} 
+				catch (WriteException e) {
+					e.printStackTrace();
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+				//**/
+			}
+		}
 	}
-
 }
