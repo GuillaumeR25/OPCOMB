@@ -140,8 +140,8 @@ public class Glouton {
 		}
 		//System.out.println(quaiF);
 		//arrivee(quaiF,navires.get(0),0);
-		Tache t = new Tache(navires.get(0),0,4,0,NbGrue);
-		rep.add(t);
+		//Tache t = new Tache(navires.get(0),0,4,0,NbGrue);
+		//rep.add(t);
 		//arrivee(quaiF,navires.get(3),8);
 		//System.out.println(quaiF);
 		//depart(quaiF,navires.get(0),0);

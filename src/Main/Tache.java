@@ -7,14 +7,46 @@ public class Tache {
 	private double fin;
 	private int position;
 	private int nbG;
+	private double chargement;
+	private double lastChange;
 	
-	public Tache(Navire nav, double debut, double fin, int position, int nbG) {
+	public Tache(Navire nav, double debut, double fin, int position, int nbG, double chargement, double lastChange) {
 		super();
 		this.nav = nav;
 		this.debut=debut;
 		this.fin = fin;
 		this.position = position;
 		this.nbG = nbG;
+		this.chargement = chargement;
+		this.lastChange = lastChange;
+	}
+
+	public double getLastChange() {
+		return lastChange;
+	}
+
+	public void setLastChange(double lastChange) {
+		this.lastChange = lastChange;
+	}
+
+	public double getDebut() {
+		return debut;
+	}
+
+	public void setDebut(double debut) {
+		this.debut = debut;
+	}
+
+	public double getChargement() {
+		return chargement;
+	}
+
+	public void setChargement(double chargement) {
+		this.chargement = chargement;
+	}
+
+	public void setFin(double fin) {
+		this.fin = fin;
 	}
 
 	public Navire getNav() {
@@ -50,7 +82,7 @@ public class Tache {
 	}
 	
 	public String toString(){
-		return "Navire "+this.nav+" Position " +this.position+" Fin "+this.fin;
+		return "Navire "+this.nav+" Position " +this.position+" Fin "+this.fin+" NbGrue "+this.nbG+" Chargement "+this.chargement+" LastCgange "+this.lastChange;
 	}
 
 }
