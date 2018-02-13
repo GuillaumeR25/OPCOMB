@@ -11,24 +11,14 @@ public class DonneesAl {
 	public DonneesAl(int nbNav) {
 		NbNav = nbNav;
 		ArrayList<Navire> navires = new ArrayList<>();
-		int GB=0;
-		int late=0;
 		int count=0;
 		while(count<NbNav){
-			int chargement = (int)((Math.random()*2420)+80);
-			if(chargement>1600){
-				GB++;
-			}
+			int chargement = (int)((Math.random()*1920)+80);
 			int taille = chargement/300+2;
 			int arrive = (int)(Math.random()*2000);
-			if(arrive>1400){
-				late++;
-			}
-			if(GB<3&&late<3){
 			Navire n_i = new Navire(count+1,chargement,taille,arrive);
 			navires.add(n_i);
-			count++;
-			}	
+			count++;	
 		}
 		this.navires=navires;
 	}
@@ -36,7 +26,7 @@ public class DonneesAl {
 
 	
 	public static void main(String[] args) {
-		DonneesAl d = new DonneesAl(6);
+		DonneesAl d = new DonneesAl(9);
 		System.out.println(d.navires);
 	}
 
