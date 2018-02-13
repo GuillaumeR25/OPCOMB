@@ -23,15 +23,20 @@ public class Glouton2 {
 		ArrayList<Navire> rep = new ArrayList<>();
 		double prec=0;
 		double suiv=prec+pas;
+		boolean loop = false;
 		int count = 0;
 		int tot=(int)(2400/pas);
 		int nav=0;
 		while(count<tot){
 			System.out.println(prec);
-			if(navires.get(nav).getArrive()>=prec && navires.get(nav).getArrive()<suiv){
+			if(navires.get(nav).getArrive()>=prec && navires.get(nav).getArrive()<suiv&&loop==false){
 				rep.add(navires.get(nav));
-				System.out.println("nav "+nav);
+				//System.out.println("nav "+nav);
+				if(nav==navires.size()-1){
+					loop=true;
+				}else{
 				nav++;
+				}
 			}else{
 				rep.add(null);
 				prec=suiv;
@@ -272,6 +277,7 @@ public class Glouton2 {
 		ArrayList<Navire> timeL = timeLine(navires,15);
 		System.out.println("timeL");
 		System.out.println(timeL);
+		System.out.println(timeL.size());
 		
 		
 		//Affichage des variables
@@ -284,7 +290,6 @@ public class Glouton2 {
 		System.out.println("Hello");
 		System.out.println("Solution : "+solution.toString());*/
 		
-		System.out.println(capaGrue);
 		
 		
 		
