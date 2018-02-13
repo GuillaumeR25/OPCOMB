@@ -18,7 +18,7 @@ public class Glouton2 {
 		return rep;
 	}
 	
-	//Fonction permmettant de dicrétiser le temps
+	//Fonction permmettant de dicrétiser le temps sur une journée de 24hs
 	public static ArrayList<Navire> timeLine (ArrayList<Navire> navires, double pas){
 		ArrayList<Navire> rep = new ArrayList<>();
 		double prec=0;
