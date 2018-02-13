@@ -267,18 +267,23 @@ public class Glouton2 {
 			/* Creation d'un champ au format texte */
 			int posLigne =2;
 			for(int j =0; j<24;j++){
-				Label label0 = new Label(j+4, posLigne-1, "Heure " + j);
+				Label label0 = new Label(j+5, posLigne-1, "Heure " + j);
 				sheet.addCell(label0);				
 			}
 			for(Tache t : solution){
 				for(int j =0; j<24;j++){
 					if(t.getDebut()/100>(double)j){
-						Label label = new Label(j+4, posLigne, " ");
+						Label label = new Label(j+5, posLigne, " ");
 						sheet.addCell(label);
 						Label label1 = new Label(2, posLigne, "Navire "+t.getNav().getId());
 						sheet.addCell(label1);
 						Label label2 = new Label(3, posLigne," Quai : " + t.getPosition() + " - " +  (t.getPosition()+t.getNav().getTaille()));
 						sheet.addCell(label2);
+						Label label3 = new Label(4, posLigne,"Grues : "+t.getNbG());
+						sheet.addCell(label3);
+						CellView cv1 = sheet.getColumnView(4);
+						cv1.setAutosize(true);
+						sheet.setColumnView(4, cv1);
 						CellView cv = sheet.getColumnView(3);
 						cv.setAutosize(true);
 						sheet.setColumnView(3, cv);
@@ -295,6 +300,11 @@ public class Glouton2 {
 						sheet.addCell(label1);
 						Label label2 = new Label(3, posLigne," Quai : " + t.getPosition() + " - " +  (t.getPosition()+t.getNav().getTaille()));
 						sheet.addCell(label2);
+						Label label3 = new Label(4, posLigne,"Grues : "+t.getNbG());
+						sheet.addCell(label3);
+						CellView cv1 = sheet.getColumnView(4);
+						cv1.setAutosize(true);
+						sheet.setColumnView(4, cv1);
 						CellView cv = sheet.getColumnView(3);
 						cv.setAutosize(true);
 						sheet.setColumnView(3, cv);
@@ -311,6 +321,11 @@ public class Glouton2 {
 						sheet.addCell(label1);
 						Label label2 = new Label(3, posLigne," Quai : " + t.getPosition() + " - " +  (t.getPosition()+t.getNav().getTaille()));
 						sheet.addCell(label2);
+						Label label3 = new Label(4, posLigne,"Grues : "+t.getNbG());
+						sheet.addCell(label3);
+						CellView cv1 = sheet.getColumnView(4);
+						cv1.setAutosize(true);
+						sheet.setColumnView(4, cv1);
 						CellView cv = sheet.getColumnView(3);
 						cv.setAutosize(true);
 						sheet.setColumnView(3, cv);
