@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import jxl.CellView;
 import jxl.Workbook;
 import jxl.format.Colour;
 import jxl.write.Label;
@@ -264,29 +265,57 @@ public class Glouton2 {
 			/* On créé une nouvelle feuille (test en position 0) et on l'ouvre en écriture */
 			WritableSheet sheet = workbook.createSheet("Planning Navire", 0); 
 			/* Creation d'un champ au format texte */
-			int posLigne =0;
+			int posLigne =2;
+			for(int j =0; j<24;j++){
+				Label label0 = new Label(j+4, posLigne-1, "Heure " + j);
+				sheet.addCell(label0);				
+			}
 			for(Tache t : solution){
 				for(int j =0; j<24;j++){
 					if(t.getDebut()/100>(double)j){
-						Label labelFormation = new Label(j, posLigne, " ");
-						sheet.addCell(labelFormation);
-						WritableCell c = sheet.getWritableCell(j,posLigne);
+						Label label = new Label(j+4, posLigne, " ");
+						sheet.addCell(label);
+						Label label1 = new Label(2, posLigne, "Navire "+t.getNav().getId());
+						sheet.addCell(label1);
+						Label label2 = new Label(3, posLigne," Quai : " + t.getPosition() + " - " +  (t.getPosition()+t.getNav().getTaille()));
+						sheet.addCell(label2);
+						CellView cv = sheet.getColumnView(3);
+						cv.setAutosize(true);
+						sheet.setColumnView(3, cv);
+						
+						WritableCell c = sheet.getWritableCell(j+4,posLigne);
 					    WritableCellFormat newFormat = new WritableCellFormat(c.getCellFormat());
 					    newFormat.setBackground(Colour.GRAY_25);
 					    c.setCellFormat(newFormat);
 					}
 					if(t.getDebut()/100<=(double)j &&t.getFin()>=(double)j){
-						Label labelFormation = new Label(j, posLigne, " ");
-						sheet.addCell(labelFormation);
-						WritableCell c = sheet.getWritableCell(j,posLigne);
+						Label label = new Label(j+4, posLigne, " ");
+						sheet.addCell(label);
+						Label label1 = new Label(2, posLigne, "Navire "+t.getNav().getId());
+						sheet.addCell(label1);
+						Label label2 = new Label(3, posLigne," Quai : " + t.getPosition() + " - " +  (t.getPosition()+t.getNav().getTaille()));
+						sheet.addCell(label2);
+						CellView cv = sheet.getColumnView(3);
+						cv.setAutosize(true);
+						sheet.setColumnView(3, cv);
+						
+						WritableCell c = sheet.getWritableCell(j+4,posLigne);
 					    WritableCellFormat newFormat = new WritableCellFormat(c.getCellFormat());
 					    newFormat.setBackground(Colour.YELLOW);
 					    c.setCellFormat(newFormat);
 					}
 					if(t.getFin()/100<(double)j){
-						Label labelFormation = new Label(j, posLigne, " ");
-						sheet.addCell(labelFormation);
-						WritableCell c = sheet.getWritableCell(j,posLigne);
+						Label label = new Label(j+4, posLigne, " ");
+						sheet.addCell(label);
+						Label label1 = new Label(2, posLigne, "Navire "+t.getNav().getId());
+						sheet.addCell(label1);
+						Label label2 = new Label(3, posLigne," Quai : " + t.getPosition() + " - " +  (t.getPosition()+t.getNav().getTaille()));
+						sheet.addCell(label2);
+						CellView cv = sheet.getColumnView(3);
+						cv.setAutosize(true);
+						sheet.setColumnView(3, cv);
+						
+						WritableCell c = sheet.getWritableCell(j+4,posLigne);
 					    WritableCellFormat newFormat = new WritableCellFormat(c.getCellFormat());
 					    newFormat.setBackground(Colour.GREEN);
 					    c.setCellFormat(newFormat);
