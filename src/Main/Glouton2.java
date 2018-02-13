@@ -186,7 +186,9 @@ public class Glouton2 {
 		int NbG = 5;
 		
 		// Capacit� de d�chargement des grues
-		int capaGrue = 20;
+		int capaGrue = 10;
+		
+		capaGrue = (int)(((double)capaGrue)*(16.0/17.0));
 		
 		// Longueur du quai;
 		int  quaiL = 20;
@@ -243,14 +245,16 @@ public class Glouton2 {
 		
 		
 		//Affichage des variables
-		System.out.println("Restant : "+restant.toString());
+		/*System.out.println("Restant : "+restant.toString());
 		System.out.println("Attente : "+attente.toString());
 		System.out.println("Taches en cours : "+taches.toString());
 		System.out.println("Quai : "+quai.toString());
 		System.out.println("Affichage solution");
 		//System.out.println(affichage(solution));
 		System.out.println("Hello");
-		System.out.println("Solution : "+solution.toString());
+		System.out.println("Solution : "+solution.toString());*/
+		
+		System.out.println(capaGrue);
 		
 		
 		
