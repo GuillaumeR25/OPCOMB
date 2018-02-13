@@ -1,24 +1,40 @@
 package Main;
 
+import java.util.ArrayList;
+
 public class Tache {
 	
 	private Navire nav;
 	private double debut;
 	private double fin;
 	private int position;
-	private int nbG;
+	private ArrayList<String> grue;
+	private int NbG;
 	private double chargement;
 	private double lastChange;
 	
-	public Tache(Navire nav, double debut, double fin, int position, int nbG, double chargement, double lastChange) {
+	public Tache(Navire nav, double debut, double fin, int position, ArrayList<String> grue, int NbG, double chargement, double lastChange) {
 		super();
 		this.nav = nav;
 		this.debut=debut;
 		this.fin = fin;
 		this.position = position;
-		this.nbG = nbG;
+		this.grue = grue;
+		this.NbG = NbG;
 		this.chargement = chargement;
 		this.lastChange = lastChange;
+	}
+
+	public int getNbG() {
+		return NbG;
+	}
+
+	public void setNbG(int nbG) {
+		NbG = nbG;
+	}
+
+	public void setGrue(ArrayList<String> grue) {
+		this.grue = grue;
 	}
 
 	public double getLastChange() {
@@ -73,16 +89,12 @@ public class Tache {
 		this.position = position;
 	}
 
-	public int getNbG() {
-		return nbG;
-	}
-
-	public void setNbG(int nbG) {
-		this.nbG = nbG;
+	public ArrayList<String> getGrue() {
+		return grue;
 	}
 	
 	public String toString(){
-		return "Navire "+this.nav+" Position " +this.position+" Fin "+this.fin+" NbGrue "+this.nbG+" Chargement "+this.chargement+" LastCgange "+this.lastChange;
+		return "Navire "+this.nav+" Position " +this.position+" Debut "+this.debut+" Fin "+this.fin+" Grue "+grue.toString()+" Chargement "+this.chargement+" LastChange "+this.lastChange;
 	}
 
 }

@@ -76,12 +76,17 @@ public class Glouton2 {
 	// Fonction qui rend la différence en heure entre deux représentation d'heure en "format double"
 	// h1 est antérieure à h2
 	public static double difference (double h1, double h2){
-		if (h1 > h2){
-			return -1;
-		}else{
-		double res = Math.floor((h2-h1)/100) + (h2-h1)%100/60;
-		return res;
+		double res = 0;
+		if (h1 < h2){
+			if(h1%100 <= h2%100){
+				res = (int)h2/100 - (int)h1/100;
+				res += (h2%100-h1%100)/60;
+			}else{
+				res = (int)h2/100 - (int)h1/100;
+				res += (h2%100-h1%100)/60;
+			}
 		}
+		return res;
 	}
 	
 	// Fonction qui répartie les grues en fonction du chargement des navires
@@ -105,23 +110,24 @@ public class Glouton2 {
 	
 	public static void update_tache (ArrayList<Tache> taches, ArrayList<Tache> rep, ArrayList<Navire> restant, ArrayList<Navire> attente, 
 			ArrayList<Integer> quai, double temps, int capaGrue, int NbG){
+		ArrayList<Tache> temp = new ArrayList<Tache>();
 		for(Tache t : taches){
-			System.out.println(t.getLastChange());
-			System.out.println(temps);
-			System.out.println("Diff : "+difference(t.getLastChange(), temps));
-			System.out.println(t.getChargement()+" -- "+Math.floor(difference(t.getLastChange(), temps)*capaGrue*t.getNbG()));
-			System.out.println(t.getNbG());
+			t.getGrue().add(temps+" - "+t.getNbG());
+			System.out.println(quai.toString());
 			t.setChargement(Math.max(t.getChargement()-Math.floor(difference(t.getLastChange(), temps)*capaGrue*t.getNbG()), 0));
 			t.setLastChange(temps);
 			if(t.getChargement() == 0){
 				t.setNbG(0);
 				t.setFin(t.getLastChange());
-				taches.remove((Object)t);
+				temp.add(t);
 				depart(quai, t.getNav(), t.getPosition());
 				rep.add(t);
 			}
 		}
 		repartition(taches, NbG);
+		for(Tache t : temp){
+			taches.remove((Object)t);
+		}
 	}
 	
 	public static void next_iter_Arrive(ArrayList<Tache> taches, ArrayList<Tache> rep, ArrayList<Navire> restant, ArrayList<Navire> attente, 
@@ -132,9 +138,10 @@ public class Glouton2 {
 			update_tache(taches, rep, restant, attente, quai, temps, capaGrue, NbG);
 		}else{
 			arrive(quai, n, newpos);
-			Tache Tcurrent = new Tache(n, n.getArrive(), n.getArrive(), newpos, 0, n.getChargement(), n.getArrive()); 
+			double temp = ((int)n.getArrive()/100)*100+((int)(n.getArrive()%100+15)/60)*100+((int)(n.getArrive()%100+15))%60;
+			Tache Tcurrent = new Tache(n, temp, temp, newpos, new ArrayList<String>(), 0, n.getChargement(), temp); 
 			taches.add(Tcurrent);
-			update_tache(taches, rep, restant, attente, quai, temps, capaGrue, NbG);
+			update_tache(taches, rep, restant, attente, quai, temp, capaGrue, NbG);
 		}
 		restant.remove((Object)n);
 		
@@ -160,9 +167,11 @@ public class Glouton2 {
 	public static void attente_enCours (ArrayList<Tache> taches, ArrayList<Tache> rep, ArrayList<Navire> restant, ArrayList<Navire> attente, 
 			ArrayList<Integer> quai, double temps, int capaGrue, int NbG, Navire n, int pos){
 		arrive(quai, n, pos);
-		Tache t = new Tache(n, temps, temps, pos, 0, n.getChargement(), temps);
+		double temp = ((int)temps/100)*100+((int)(temps%100+15)/60)*100+((int)(temps%100+15))%60;
+		System.out.println("TEMPS : "+temps);
+		Tache t = new Tache(n, temp, temp, pos, new ArrayList<String>(), 0, n.getChargement(), temp);
 		taches.add(t);
-		update_tache(taches, rep, restant, attente, quai, temps, capaGrue, NbG);
+		update_tache(taches, rep, restant, attente, quai, temp, capaGrue, NbG);
 		
 		
 	}
@@ -172,21 +181,33 @@ public class Glouton2 {
 		
 		//Données du problème
 		
+		//DonneesAl donnees = new DonneesAl(3);
+		
 		// Liste des navires
 		ArrayList<Navire> navires = new ArrayList<Navire>();
 		
-		for(int i=0; i<5; i++){
-			navires.add(new Navire(i+1, 200, 4, 100*i));
-		}
+		navires.add(new Navire(1, 234, 5, 123));
+		navires.add(new Navire(2, 124, 3, 234));
+		navires.add(new Navire(3, 321, 6, 447));
+		navires.add(new Navire(4, 435, 7, 1023));
+		navires.add(new Navire(5, 276, 5, 1245));
+		navires.add(new Navire(6, 94, 2, 1254));
+		navires.add(new Navire(7, 157, 4, 1732));
+		System.out.println(navires);
 		
 		//Nombre de grue
-		int NbG = 5;
+		int NbG = 6;
 		
 		// Capacité de déchargement des grues
 		int capaGrue = 20;
 		
+		capaGrue = (int)((double)capaGrue*(16.0/17.0));
+		
+		// Nombre de grutiers
+		int NbGrutiers = 50;
+		
 		// Longueur du quai;
-		int  quaiL = 12;
+		int  quaiL = 15;
 		
 		// Variables du problème
 		
@@ -211,28 +232,21 @@ public class Glouton2 {
 		
 		//Execution du code
 		
-		for(int i=1; i<6; i++){
+		for(int i=1; i<8; i++){
 			double temp = restant.get(0).getArrive();
-			next_iter_Arrive(taches, solution, restant, attente, quai, restant.get(0).getArrive(), capaGrue, NbG, restant.get(0));
-			if(taches.size() > 0){
-				System.out.println(taches.get(0).toString());
-			}
-			if(taches.size() > 1){
-				System.out.println(taches.get(1).toString());
-			}
-			update_attente(taches, solution, restant, attente, quai, i*100, capaGrue, NbG);
-			if(taches.size() > 0){
-				System.out.println(taches.get(0).toString());
-			}
-			if(taches.size() > 1){
-				System.out.println(taches.get(1).toString());
-			}
+			double time = restant.get(0).getArrive();
+			next_iter_Arrive(taches, solution, restant, attente, quai, time, capaGrue, NbG, restant.get(0));
+			update_attente(taches, solution, restant, attente, quai, time, capaGrue, NbG);
 		}
 		
-		update_tache(taches, solution, restant, attente, quai, 600, capaGrue, NbG);
-		update_tache(taches, solution, restant, attente, quai, 600, capaGrue, NbG);
-		update_tache(taches, solution, restant, attente, quai, 600, capaGrue, NbG);
 		
+		int compt = 1900;
+		while(!restant.isEmpty() || !attente.isEmpty() || !taches.isEmpty()){
+			update_tache(taches, solution, restant, attente, quai, compt, capaGrue, NbG);
+			update_attente(taches, solution, restant, attente, quai, compt, capaGrue, NbG);
+			compt += 15;
+		}
+
 		
 		
 		
@@ -241,7 +255,11 @@ public class Glouton2 {
 		System.out.println("Attente : "+attente.toString());
 		System.out.println("Taches en cours : "+taches.toString());
 		System.out.println("Quai : "+quai.toString());
-		System.out.println("Solution : "+solution.toString());
+		System.out.println();
+		System.out.println("Solution : ");
+		for(Tache t : solution){
+			System.out.println(t.toString());
+		}
 		
 		
 		
