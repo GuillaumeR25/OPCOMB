@@ -1,6 +1,6 @@
 package Main;
 
-public class Navire {
+public class Navire implements Comparable<Navire>{
 	
 	/* Identifiant */
 	private int id;
@@ -12,7 +12,7 @@ public class Navire {
 	private int taille;
 	
 	/* Heure d'arriv�e du navire */
-	private int arrive;
+	private double arrive;
 	
 	
 	
@@ -24,7 +24,7 @@ public class Navire {
 
 
 
-	public Navire(int id, int chargement, int taille, int arrive) {
+	public Navire(int id, int chargement, int taille, double arrive) {
 		super();
 		this.id = id;
 		this.chargement = chargement;
@@ -75,11 +75,20 @@ public class Navire {
 
 
 
-	public void setArrive(int arrive) {
+	public void setArrive(double arrive) {
 		this.arrive = arrive;
 	}
 	
-	
+	public int compareTo(Navire nav){
+		int rep=0;
+		if(this.arrive<nav.getArrive()){
+			rep=-1;
+		}
+		if(this.arrive>nav.getArrive()){
+			rep=1;
+		}
+		return rep;
+	}
 
 
 
@@ -94,9 +103,5 @@ public class Navire {
 		return "Identifiant : "+this.getId()+" - Chargement"+this.getChargement()+
 				" - Taille : "+this.getTaille()+" - Arrive : "+this.getArrive();
 	}
-	
-	
-	
-	
 
 }

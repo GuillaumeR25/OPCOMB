@@ -1,6 +1,7 @@
 package Main;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DonneesAl {
 	
@@ -20,6 +21,7 @@ public class DonneesAl {
 			navires.add(n_i);
 			count++;	
 		}
+		Collections.sort(navires);
 		this.navires=navires;
 	}
 
@@ -27,7 +29,6 @@ public class DonneesAl {
 	
 	public static void main(String[] args) {
 		DonneesAl d = new DonneesAl(9);
-		System.out.println(d.navires);
 	}
 
 }
