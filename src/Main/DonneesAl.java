@@ -17,6 +17,10 @@ public class DonneesAl {
 			int chargement = (int)((Math.random()*1920)+80);
 			int taille = chargement/300+2;
 			int arrive = (int)(Math.random()*2000);
+			int min = arrive-(arrive/100)*100;
+			if(min>59){
+				arrive=(arrive-min)+100+(min-60);
+			}
 			Navire n_i = new Navire(count+1,chargement,taille,arrive);
 			navires.add(n_i);
 			count++;	
@@ -29,6 +33,7 @@ public class DonneesAl {
 	
 	public static void main(String[] args) {
 		DonneesAl d = new DonneesAl(9);
+		System.out.println(d.navires);
 	}
 
 }

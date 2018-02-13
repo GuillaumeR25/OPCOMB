@@ -18,6 +18,31 @@ public class Glouton2 {
 		return rep;
 	}
 	
+	//Fonction permmettant de dicrétiser le temps
+	public static ArrayList<Navire> timeLine (ArrayList<Navire> navires, double pas){
+		ArrayList<Navire> rep = new ArrayList<>();
+		double prec=0;
+		double suiv=prec+pas;
+		int count = 0;
+		int tot=(int)(2400/pas);
+		int nav=0;
+		while(count<tot){
+			System.out.println(prec);
+			if(navires.get(nav).getArrive()>=prec && navires.get(nav).getArrive()<suiv){
+				rep.add(navires.get(nav));
+				System.out.println("nav "+nav);
+				nav++;
+			}else{
+				rep.add(null);
+				prec=suiv;
+				suiv=prec+pas;
+				count++;
+			}
+			
+		}
+		return rep;
+	}
+	
 	// Fonction mettant � jour le quai lors du d�part d'un navire
 	public static void depart(ArrayList<Integer> quai, Navire nav, int pos){
 		for(int i=0;i<nav.getTaille()+2;i++){
@@ -170,14 +195,15 @@ public class Glouton2 {
 		
 		//Donn�es du probl�me
 		
-		// Liste des navires
-		/*ArrayList<Navire> navires = new ArrayList<Navire>();
+		//Liste des navires
+		ArrayList<Navire> navires = new ArrayList<Navire>();
 		
 		for(int i=0; i<5; i++){
 			navires.add(new Navire(i+1, 200, 4, 100*i));
-		}*/
+		}
 		
-		ArrayList<Navire> navires = Donnees1.dNav();
+		
+		//ArrayList<Navire> navires = Donnees1.dNav();
 		
 		//Nombre de navires
 		int NbV = navires.size();
@@ -219,7 +245,7 @@ public class Glouton2 {
 		// Liste des taches termin�es
 		ArrayList<Tache> solution = new ArrayList<Tache>();;
 		
-		
+		/*
 		//Execution du code
 		System.out.println("Début éxécution");
 		for(int i=0; i<3; i++){
@@ -240,8 +266,12 @@ public class Glouton2 {
 				System.out.println(taches.get(1).toString());
 			}
 		}
-		
-		
+		*/
+		System.out.println("navires");
+		System.out.println(navires);
+		ArrayList<Navire> timeL = timeLine(navires,15);
+		System.out.println("timeL");
+		System.out.println(timeL);
 		
 		
 		//Affichage des variables
