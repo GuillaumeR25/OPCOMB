@@ -17,13 +17,13 @@ public class Donnees1 {
 		public static ArrayList<Navire> dNav(){
 		
 			ArrayList<Navire> rep = new ArrayList<>();
-			Navire n1 = new Navire(1, 250, 4, 1);
-			Navire n2 = new Navire(2, 2500, 7, 1);
-			Navire n3 = new Navire(3, 1200, 6, 3);
-			Navire n4 = new Navire(4, 130, 2, 5);
-			Navire n5 = new Navire(5, 1780, 4, 12);
-			Navire n6 = new Navire(6, 670, 5, 13);
-			Navire n7 = new Navire(7, 344, 3, 16);
+			Navire n1 = new Navire(1, 250, 4, 100);
+			Navire n2 = new Navire(2, 2500, 7, 100);
+			Navire n3 = new Navire(3, 1200, 6, 300);
+			Navire n4 = new Navire(4, 130, 2, 500);
+			Navire n5 = new Navire(5, 1780, 4, 1200);
+			Navire n6 = new Navire(6, 670, 5, 1300);
+			Navire n7 = new Navire(7, 344, 3, 1600);
 			rep.add(n1);
 			rep.add(n2);
 			rep.add(n3);

@@ -36,7 +36,7 @@ public class Glouton2 {
 	
 	// Fonction mettant � jour la liste des navires en attente dans le port pour un temps t
 	public static void aJour(ArrayList<Navire> restant,ArrayList<Navire> attente, double temps){
-		int l =restant.size();
+		int l = restant.size();
 		ArrayList<Navire> withdraw =new ArrayList<>();
 		for(int i=0; i<l; i++){
 			Navire n = restant.get(i);
@@ -157,17 +157,30 @@ public class Glouton2 {
 		}
 	}
 	
+	public static String affichage (ArrayList<Tache> taches){
+		String rep ="";
+		for(int i=0; i<taches.size(); i++){
+			rep=rep+taches.get(i)+"\n";
+		}
+		return rep;
+	}
+	
 	public static void main(String[] args) {
 		
 		
 		//Donn�es du probl�me
 		
 		// Liste des navires
-		ArrayList<Navire> navires = new ArrayList<Navire>();
+		/*ArrayList<Navire> navires = new ArrayList<Navire>();
 		
 		for(int i=0; i<5; i++){
 			navires.add(new Navire(i+1, 200, 4, 100*i));
-		}
+		}*/
+		
+		ArrayList<Navire> navires = Donnees1.dNav();
+		
+		//Nombre de navires
+		int NbV = navires.size();
 		
 		//Nombre de grue
 		int NbG = 5;
@@ -176,7 +189,7 @@ public class Glouton2 {
 		int capaGrue = 20;
 		
 		// Longueur du quai;
-		int  quaiL = 12;
+		int  quaiL = 20;
 		
 		// Variables du probl�me
 		
@@ -185,6 +198,9 @@ public class Glouton2 {
 		
 		// Navire en attente
 		ArrayList<Navire> attente = new ArrayList<Navire>();
+		
+		// Navire ayant ete décharge
+		ArrayList<Navire> decharge = new ArrayList<>();
 		
 		// Tache en cours
 		ArrayList<Tache> taches = new ArrayList<Tache>();
@@ -195,14 +211,20 @@ public class Glouton2 {
 			quai.add(0);
 		}
 		
+		// Boolean solution
+		boolean sol = false;
+		
 		// Liste des taches termin�es
 		ArrayList<Tache> solution = new ArrayList<Tache>();;
 		
 		
 		//Execution du code
-		
-		for(int i=1; i<6; i++){
-			double temp = restant.get(0).getArrive();
+		System.out.println("Début éxécution");
+		//int i=0;
+		//while(!sol){
+		for(int i=0; i<3; i++){
+			System.out.println("i"+i);
+			//double temp = restant.get(0).getArrive();
 			next_iter_Arrive(taches, solution, restant, attente, quai, restant.get(0).getArrive(), capaGrue, NbG, restant.get(0));
 			if(taches.size() > 0){
 				System.out.println(taches.get(0).toString());
@@ -217,6 +239,10 @@ public class Glouton2 {
 			if(taches.size() > 1){
 				System.out.println(taches.get(1).toString());
 			}
+			/*if(decharge.size()==NbV){
+				sol=true;
+			}*/
+			//i++;
 		}
 		
 		
@@ -227,6 +253,9 @@ public class Glouton2 {
 		System.out.println("Attente : "+attente.toString());
 		System.out.println("Taches en cours : "+taches.toString());
 		System.out.println("Quai : "+quai.toString());
+		System.out.println("Affichage solution");
+		//System.out.println(affichage(solution));
+		System.out.println("Hello");
 		System.out.println("Solution : "+solution.toString());
 		
 		
