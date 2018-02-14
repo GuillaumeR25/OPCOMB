@@ -1,6 +1,20 @@
 package Main;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import jxl.CellView;
+import jxl.Workbook;
+import jxl.format.Colour;
+import jxl.write.Label;
+import jxl.write.WritableCell;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
+
 
 public class Glouton2 {
 	
@@ -18,14 +32,14 @@ public class Glouton2 {
 		return rep;
 	}
 	
-	// Fonction mettant à jour le quai lors du départ d'un navire
+	// Fonction mettant ï¿½ jour le quai lors du dï¿½part d'un navire
 	public static void depart(ArrayList<Integer> quai, Navire nav, int pos){
 		for(int i=0;i<nav.getTaille()+2;i++){
 			quai.set(pos+i, 0);
 		}
 	}
 	
-	// Fonction mettant à jour le quai lors de l'arrivée d'un navire.
+	// Fonction mettant ï¿½ jour le quai lors de l'arrivï¿½e d'un navire.
 	public static void arrive(ArrayList<Integer> quai, Navire n, int pos){
 		int encombrement = n.encombrement();
 		int id = n.getId();
@@ -34,7 +48,7 @@ public class Glouton2 {
 		}
 	}
 	
-	// Fonction mettant à jour la liste des navires en attente dans le port pour un temps t
+	// Fonction mettant ï¿½ jour la liste des navires en attente dans le port pour un temps t
 	public static void aJour(ArrayList<Navire> restant,ArrayList<Navire> attente, double temps){
 		int l =restant.size();
 		ArrayList<Navire> withdraw =new ArrayList<>();
@@ -73,8 +87,8 @@ public class Glouton2 {
 		
 	}
 	
-	// Fonction qui rend la différence en heure entre deux représentation d'heure en "format double"
-	// h1 est antérieure à h2
+	// Fonction qui rend la diffï¿½rence en heure entre deux reprï¿½sentation d'heure en "format double"
+	// h1 est antï¿½rieure ï¿½ h2
 	public static double difference (double h1, double h2){
 		double res = 0;
 		if (h1 < h2){
@@ -89,7 +103,7 @@ public class Glouton2 {
 		return res;
 	}
 	
-	// Fonction qui répartie les grues en fonction du chargement des navires
+	// Fonction qui rï¿½partie les grues en fonction du chargement des navires
 	public static void repartition(ArrayList<Tache> taches, int NbG){
 		double s = 0;
 		for(Tache t : taches){
@@ -106,7 +120,7 @@ public class Glouton2 {
 		taches.get(taches.size()-1).setNbG(NbG-g);
 	}
 	
-	// Fonction qui met à jour les taches en cours.
+	// Fonction qui met ï¿½ jour les taches en cours.
 	
 	public static void update_tache (ArrayList<Tache> taches, ArrayList<Tache> rep, ArrayList<Navire> restant, ArrayList<Navire> attente, 
 			ArrayList<Integer> quai, double temps, int capaGrue, int NbG){
@@ -179,7 +193,7 @@ public class Glouton2 {
 	public static void main(String[] args) {
 		
 		
-		//Données du problème
+		//Donnï¿½es du problï¿½me
 		
 		//DonneesAl donnees = new DonneesAl(3);
 		
@@ -198,7 +212,7 @@ public class Glouton2 {
 		//Nombre de grue
 		int NbG = 6;
 		
-		// Capacité de déchargement des grues
+		// Capacitï¿½ de dï¿½chargement des grues
 		int capaGrue = 20;
 		
 		capaGrue = (int)((double)capaGrue*(16.0/17.0));
@@ -209,7 +223,7 @@ public class Glouton2 {
 		// Longueur du quai;
 		int  quaiL = 15;
 		
-		// Variables du problème
+		// Variables du problï¿½me
 		
 		// Navires restants
 		ArrayList<Navire> restant = navires;
@@ -226,7 +240,7 @@ public class Glouton2 {
 			quai.add(0);
 		}
 		
-		// Liste des taches terminées
+		// Liste des taches terminï¿½es
 		ArrayList<Tache> solution = new ArrayList<Tache>();;
 		
 		
@@ -244,7 +258,7 @@ public class Glouton2 {
 		while(!restant.isEmpty() || !attente.isEmpty() || !taches.isEmpty()){
 			update_tache(taches, solution, restant, attente, quai, compt, capaGrue, NbG);
 			update_attente(taches, solution, restant, attente, quai, compt, capaGrue, NbG);
-			compt += 15;
+			compt += 100;
 		}
 
 		
@@ -261,7 +275,125 @@ public class Glouton2 {
 			System.out.println(t.toString());
 		}
 		
+		//Creation de la feuille de planning excel excel
 		
+		WritableWorkbook workbook = null;
+		try {
+			/* On crÃ©Ã© un nouveau worbook et on l'ouvre en Ã©criture */
+			workbook = Workbook.createWorkbook(new File("/Users/clovismonmousseau/git/OPCOMB/data/Sortie.xls"));
+			/* On crÃ©Ã© une nouvelle feuille (test en position 0) et on l'ouvre en Ã©criture */
+			WritableSheet sheet = workbook.createSheet("Planning Navire", 0); 
+			/* Creation d'un champ au format texte */
+			int posLigne =2;
+			for(int j =0; j<24;j++){
+				Label label0 = new Label(j+5, posLigne-1, "Heure " + j);
+				sheet.addCell(label0);				
+			}
+			for(Tache t : solution){
+				for(int j =0; j<24;j++){
+					if(t.getDebut()/100>(double)j){
+						Label label = new Label(j+5, posLigne, " ");
+						sheet.addCell(label);
+						Label label1 = new Label(2, posLigne, "Navire "+t.getNav().getId());
+						sheet.addCell(label1);
+						Label label2 = new Label(3, posLigne," Quai : " + t.getPosition() + " - " +  (t.getPosition()+t.getNav().getTaille()));
+						sheet.addCell(label2);
+						Label label3 = new Label(4, posLigne,"Grues : " + t.getGrue());
+						sheet.addCell(label3);
+						CellView cv2 = sheet.getColumnView(5);
+						cv2.setAutosize(true);
+						sheet.setColumnView(5, cv2);
+						CellView cv1 = sheet.getColumnView(4);
+						cv1.setAutosize(true);
+						sheet.setColumnView(4, cv1);
+						CellView cv = sheet.getColumnView(3);
+						cv.setAutosize(true);
+						sheet.setColumnView(3, cv);
+						
+						WritableCell c = sheet.getWritableCell(j+5,posLigne);
+					    WritableCellFormat newFormat = new WritableCellFormat(c.getCellFormat());
+					    newFormat.setBackground(Colour.GRAY_25);
+					    c.setCellFormat(newFormat);
+					}
+					if(t.getDebut()/100-1<=(double)j &&t.getFin()>=(double)j){
+						Label label = new Label(j+5, posLigne, " ");
+						sheet.addCell(label);
+						Label label1 = new Label(2, posLigne, "Navire "+t.getNav().getId());
+						sheet.addCell(label1);
+						Label label2 = new Label(3, posLigne," Quai : " + t.getPosition() + " - " +  (t.getPosition()+t.getNav().getTaille()));
+						sheet.addCell(label2);
+						Label label3 = new Label(4, posLigne,"Grues : "+t.getGrue());
+						sheet.addCell(label3);
+						CellView cv2 = sheet.getColumnView(5);
+						cv2.setAutosize(true);
+						sheet.setColumnView(5, cv2);
+						CellView cv1 = sheet.getColumnView(4);
+						cv1.setAutosize(true);
+						sheet.setColumnView(4, cv1);
+						CellView cv = sheet.getColumnView(3);
+						cv.setAutosize(true);
+						sheet.setColumnView(3, cv);
+						
+						WritableCell c = sheet.getWritableCell(j+5,posLigne);
+					    WritableCellFormat newFormat = new WritableCellFormat(c.getCellFormat());
+					    newFormat.setBackground(Colour.YELLOW);
+					    c.setCellFormat(newFormat);
+					}
+					if(t.getFin()/100<(double)j){
+						Label label = new Label(j+5, posLigne, " ");
+						sheet.addCell(label);
+						Label label1 = new Label(2, posLigne, "Navire "+t.getNav().getId());
+						sheet.addCell(label1);
+						Label label2 = new Label(3, posLigne," Quai : " + t.getPosition() + " - " +  (t.getPosition()+t.getNav().getTaille()));
+						sheet.addCell(label2);
+						Label label3 = new Label(4, posLigne,"Grues : "+t.getGrue());
+						sheet.addCell(label3);
+						CellView cv2 = sheet.getColumnView(5);
+						cv2.setAutosize(true);
+						sheet.setColumnView(5, cv2);
+						CellView cv1 = sheet.getColumnView(4);
+						cv1.setAutosize(true);
+						sheet.setColumnView(4, cv1);
+						CellView cv = sheet.getColumnView(3);
+						cv.setAutosize(true);
+						sheet.setColumnView(3, cv);
+						
+						WritableCell c = sheet.getWritableCell(j+5,posLigne);
+					    WritableCellFormat newFormat = new WritableCellFormat(c.getCellFormat());
+					    newFormat.setBackground(Colour.GREEN);
+					    c.setCellFormat(newFormat);
+					}
+				}
+				posLigne++;
+			}
+			/* On ecrit le classeur */
+			workbook.write(); 
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		} 
+		catch (RowsExceededException e) {
+			e.printStackTrace();
+		}
+		catch (WriteException e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(workbook!=null){
+				/* On ferme le worbook pour libÃ©rer la mÃ©moire */
+				/**/
+				try {
+					workbook.close();
+				} 
+				catch (WriteException e) {
+					e.printStackTrace();
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+				//**/
+			}
+		}
 		
 	}
 
